@@ -1,5 +1,5 @@
 #include <iostream>
-#include "math.h"//ÒıÈëmath.hÎÄ¼ş,ºóĞøÓÃµ½maxºÍminº¯Êı
+#include <cmath>
 #define Max_length 5001
 using namespace std;
 int Algorithm(int prices[], int x);
@@ -11,10 +11,10 @@ int main()
 	cin >> days;
 	while (days <= 0 || days > Max_length)
 	{
-		cout << "Error£¬enter it again." << endl;
+		cout << "Errorï¼Œenter it again." << endl;
 		cout << "days:" << endl;
 		cin >> days;
-	}//´úÂëµÄ½¡×³ĞÔ,¿¼ÂÇµ½ 1 <= prices.length <= 5000
+	}//ä»£ç çš„å¥å£®æ€§,è€ƒè™‘åˆ° 1 <= prices.length <= 5000
 	cout << "Please enter the stock price for each day:" << endl;
 	int i = 0;
 	int entered_price = 0;
@@ -22,46 +22,46 @@ int main()
 	{
 		cin >> entered_price;
 		if (entered_price < 0 || entered_price > 1000)
-			cout << "Error£¬enter it again." << endl;
+			cout << "Errorï¼Œenter it again." << endl;
 		else
 		{
 			prices[i] = entered_price;
 			i++;
 		}
-	}//´úÂëµÄ½¡×³ĞÔ,¿¼ÂÇµ½ 0 <= prices[i] <= 1000
+	}//ä»£ç çš„å¥å£®æ€§,è€ƒè™‘åˆ° 0 <= prices[i] <= 1000
 	int Max_profit = Algorithm(prices, days);
-	cout << "Max_profit:" << Max_profit << endl;//Êä³ö½á¹û
+	cout << "Max_profit:" << Max_profit << endl;//è¾“å‡ºç»“æœ
 	return 0;
 }
-//±¾Ìâ²ÉÓÃÒ»Î¬¶¯Ì¬¹æ»®
+//æœ¬é¢˜é‡‡ç”¨ä¸€ç»´åŠ¨æ€è§„åˆ’
 int Algorithm(int prices[], int days)
 {
-	int profit[Max_length];//profit[i]±íÊ¾µÚiÌìÂô³ö¹ÉÆ±ºó,¿ÉÒÔ³ÖÓĞµÄ×î´óÇ®Êı
+	int profit[Max_length];//profit[i]è¡¨ç¤ºç¬¬iå¤©å–å‡ºè‚¡ç¥¨å,å¯ä»¥æŒæœ‰çš„æœ€å¤§é’±æ•°
 	int Max_profit = 0;
 	for (int i = 0; i < days; i++)
 		profit[i] = 0;
 	profit[0] = 0;
-	profit[1] = max(prices[1] - prices[0], 0);//³õÊ¼»¯profit[i]
+	profit[1] = max(prices[1] - prices[0], 0);//åˆå§‹åŒ–profit[i]
 	for (int i = 2; i < days; i++)
 	{
 		profit[i] = max(profit[i], prices[i] - min(prices[0], prices[1]));
-		//Íâ²ãÑ­»·, ÓÉÓÚÏÂÎÄÖĞjÊÇ´Ó2¿ªÊ¼±éÀúµÄ,ÕâÀïÏÈ½«profit[i]¶¨ÒåÎª(profit[i]ºÍµÚiÌì¹ÉÆ±¼Û¼õÈ¥µÚ0ÌìºÍµÚ1Ìì¹ÉÆ±¼ÛµÍµÄÒ»¸ö)ÖĞµÄ×î´óÖµ
+		//å¤–å±‚å¾ªç¯, ç”±äºä¸‹æ–‡ä¸­jæ˜¯ä»2å¼€å§‹éå†çš„,è¿™é‡Œå…ˆå°†profit[i]å®šä¹‰ä¸º(profit[i]å’Œç¬¬iå¤©è‚¡ç¥¨ä»·å‡å»ç¬¬0å¤©å’Œç¬¬1å¤©è‚¡ç¥¨ä»·ä½çš„ä¸€ä¸ª)ä¸­çš„æœ€å¤§å€¼
 		for (int j = 2; j < i; j++)
 			profit[i] = max(profit[i], profit[j - 2] + (prices[i] - prices[j]));
-		//ÄÚ²ãÑ­»·,ÓÉ×´Ì¬×ªÒÆ·½³Ì profit[i] = max(profit[i], profit[j - 2] + (prices[i] - prices[j]))£¬¼´´ÓµÚjÌìÂòÈë,µÚiÌìÂô³öÊ±,ÀûÈóµÄ×î´óÖµ
+		//å†…å±‚å¾ªç¯,ç”±çŠ¶æ€è½¬ç§»æ–¹ç¨‹ profit[i] = max(profit[i], profit[j - 2] + (prices[i] - prices[j]))ï¼Œå³ä»ç¬¬jå¤©ä¹°å…¥,ç¬¬iå¤©å–å‡ºæ—¶,åˆ©æ¶¦çš„æœ€å¤§å€¼
 	}
 	for (int k = 0; k < days; k++)
-		Max_profit = max(Max_profit, profit[k]);//Í¨¹ı±éÀú,ÕÒµ½ Max_profit
+		Max_profit = max(Max_profit, profit[k]);//é€šè¿‡éå†,æ‰¾åˆ° Max_profit
 	return Max_profit;
 }
 /*
- *²âÊÔÊı¾İ:days:5
- *ÊäÈë:1 2 3 0 2
- *Êä³ö Max_profit:3
- *²âÊÔÊı¾İ:days:5
- *ÊäÈë:1 2 3 4 5
- *Êä³ö Max_profit:4
- *²âÊÔÊı¾İ:days:1 
- *ÊäÈë:30 
- *Êä³ö Max_profit:0 
+ *æµ‹è¯•æ•°æ®:days:5
+ *è¾“å…¥:1 2 3 0 2
+ *è¾“å‡º Max_profit:3
+ *æµ‹è¯•æ•°æ®:days:5
+ *è¾“å…¥:1 2 3 4 5
+ *è¾“å‡º Max_profit:4
+ *æµ‹è¯•æ•°æ®:days:1 
+ *è¾“å…¥:30 
+ *è¾“å‡º Max_profit:0 
  */
